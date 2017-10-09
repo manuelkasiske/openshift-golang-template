@@ -1,0 +1,24 @@
+extends /layout/default
+
+block navigation
+    +navigationBar({ })
+
+block content
+    #myCarousel.carousel.slide(data-ride="carousel")
+        ol.carousel-indicators
+            // li.active(data-target="#myCarousel", data-slide-to="0")
+            // li(data-target="#myCarousel", data-slide-to="1")
+            // li(data-target="#myCarousel", data-slide-to="2")
+            // li(data-target="#myCarousel", data-slide-to="3")
+        .carousel-inner(role="listbox")
+            .item.active(style="background: url(/static/smileys.jpg) no-repeat center; background-size: cover; width: 100vw; height: 100vh;")
+                .container
+                    .carousel-caption
+                        .well.well--translucent
+                            h1 Team Stimmung
+                            p Ups and downs sind alltäglich. Wie fühlst du dich heute?
+                            p
+                                a.btn.btn-lg.btn-primary(href="/evaluation") Auswertung
+
+block bottomScripts
+    script(src="/static/js/index.bundle.js")

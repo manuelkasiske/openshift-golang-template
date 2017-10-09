@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hard Mood - Administration</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="google-signin-client_id" content="10256926422-quhsgmmfd1knnr2t90ckq1tt11qkpiff.apps.googleusercontent.com">
+    <link rel="icon" href="/static/images/favicon.png?v=2" size="16x16" type="image/png">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries-->
+    <!-- [if lt IE 9]-->
+    <script type="text/javascript" src="http://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script type="text/javascript" src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!-- [endif]-->
+  </head>
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">HardMood</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Admin<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/admin/subscribers">Benutzerverwaltung</a></li>
+                    <li><a href="/evaluation">Auswertung</a></li>
+                  </ul>
+                </li>
+                <li><a style="display:none;" href="/login" onclick="signIn();">Login</a></li>
+                <li><a href="#" onclick="signOut();">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="page-header">
+          <h2>Login</h2>
+        </div>
+        <div style="display: none" role="alert" data-bind="visible: shouldShowErrorMessage" class="alert alert-danger"><strong>Ohne Erfolg!</strong>Login nicht erfolgreich.</div>
+        <div class="div panel panel-default">
+          <form id="loginForm" method="post" action="#">
+            <label for="username">Login</label>
+            <input id="username" type="text" name="username" data-bind="value: email">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" data-bind="value: password">
+            <button data-bind="click: submitLogin" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+        <div data-onsuccess="onSignIn" class="g-signin2"></div>
+      </div>
+    </div>
+    <footer>
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <p class="navbar-text navbar-right">&copy; 2016 HardMood Inc.</p>
+        </div>
+      </nav>
+    </footer>
+    <script src="https://apis.google.com/js/platform.js" async="" defer=""></script>
+    <script src="/static/js/login.bundle.js"></script>
+    <script>
+      function onSignIn(googleUser) {
+      "use strict"
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+      }
+      function signOut() {
+      "use strict"
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+      console.log('User signed out.');
+      });
+      }
+    </script>
+  </body>
+</html>

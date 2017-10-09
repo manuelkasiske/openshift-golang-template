@@ -1,0 +1,44 @@
+extends /layout/default
+
+block navigation
+    +navigationBar({ })
+
+block content
+    .container
+        .row
+            .page-header
+                h2 Login
+            .alert.alert-danger(style="display: none", role="alert", data-bind="visible: shouldShowErrorMessage")
+                            strong.
+                                Ohne Erfolg!
+                            | Login nicht erfolgreich.
+            .div.panel.panel-default
+                form(id="loginForm" method="post" action="#")
+                    label(for="username").
+                        Login
+                    input#username(type="text" name="username" data-bind="value: email")
+                    label(for="password").
+                        Password
+                    input#password(type="password" name="password" data-bind="value: password")
+                    button.btn.btn-primary(data-bind="click: submitLogin") Login
+            .g-signin2(data-onsuccess='onSignIn')
+
+block bottomScripts
+    script(src='https://apis.google.com/js/platform.js', async='', defer='')
+    script(src="/static/js/login.bundle.js")
+    script.
+          function onSignIn(googleUser) {
+          "use strict"
+          var profile = googleUser.getBasicProfile();
+          console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+          console.log('Name: ' + profile.getName());
+          console.log('Image URL: ' + profile.getImageUrl());
+          console.log('Email: ' + profile.getEmail());
+          }
+          function signOut() {
+          "use strict"
+          var auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(function () {
+          console.log('User signed out.');
+          });
+          }

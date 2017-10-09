@@ -1,0 +1,67 @@
+extends /layout/default
+
+block navigation
+    +navigationBar({
+
+    })
+
+block content
+    .container
+        .row
+            .panel
+                .panel-body
+                    .moodForm.col-md-10.col-md-offset-1
+                        .page-header
+                            h1.
+                                How do you feel today?
+                        .moodForm__wrapper.text-center
+
+                            form(method="POST", data-bind="attr: {action: moodUrl()}")
+                                .row
+                                    .slider.slider--moods(data-bind="slider: mood(), attr: {class: moodClass()}", data-snap="false")
+                                        .slider__handle.slider__handle--grip
+                                            .slider__moodIndicator(data-bind="text:moodLabel()")
+                                .row.text-center
+                                    button.btn.btn-primary(type="submit", data-bind="click: doPost").
+                                        submit
+
+                            //
+                                .row
+                                    button.btn.btn--mood(type="submit", name="mood", value="2.0", data-bind="click: doPost")
+                                        span.moodIcon.moodIcon--veryHappy
+                                        span.btn__label.
+                                            very happy
+                                .row
+                                    button.btn.btn--mood(type="submit", name="mood", value="1.0", data-bind="click: doPost")
+                                        span.moodIcon.moodIcon--happy
+                                        span.btn__label.
+                                            happy
+                                .row
+                                    button.btn.btn--mood(type="submit", name="mood", value="0.0", data-bind="click: doPost")
+                                        span.moodIcon.moodIcon--neutral
+                                        span.btn__label.
+                                            neutral
+                                .row
+                                    button.btn.btn--mood(type="submit", name="mood", value="-1.0", data-bind="click: doPost")
+                                        span.moodIcon.moodIcon--unhappy
+                                        span.btn__label.
+                                            unhappy
+                                .row
+                                    button.btn.btn--mood(type="submit", name="mood", value="-2.0", data-bind="click: doPost")
+                                        span.moodIcon.moodIcon--veryUnhappy
+                                        span.btn__label.
+                                            very unhappy
+
+    #alertBox.modal.fade.bs-example-modal-sm(style="display: none", tabindex="-1", role="dialog", aria-labelledby="modalLabel")
+        .modal-dialog.modal-sm
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                        span(aria-hidden="true").
+                            x
+                    h2#modalLabel.modal-title(data-bind="text: errorTitle")
+                .modal-body
+                    .errorMessage(data-bind="text: errorMessage")
+
+block bottomScripts
+    script(src="/static/js/form.bundle.js")

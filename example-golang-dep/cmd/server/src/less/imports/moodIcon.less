@@ -1,0 +1,56 @@
+.moodIcon {
+
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &--veryHappy {
+    background-image: url(/static/images/veryHappy.png);
+  }
+
+  &--happy {
+    background-image: url(/static/images/happy.png);
+  }
+
+  &--neutral {
+    background-image: url(/static/images/neutral.png);
+  }
+
+  &--unhappy {
+    background-image: url(/static/images/unhappy.png);
+  }
+
+  &--veryUnhappy {
+    background-image: url(/static/images/veryUnhappy.png);
+  }
+
+}
+// ... as mixins
+.moodIcon() {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.moodIcon--veryHappy() {
+  background-image: url(/static/images/veryHappy.png);
+}
+
+.moodIcon--happy() {
+  background-image: url(/static/images/happy.png);
+}
+
+.moodIcon--neutral() {
+  background-image: url(/static/images/neutral.png);
+}
+
+.moodIcon--unhappy() {
+  background-image: url(/static/images/unhappy.png);
+}
+
+.moodIcon--veryUnhappy() {
+  background-image: url(/static/images/veryUnhappy.png);
+}

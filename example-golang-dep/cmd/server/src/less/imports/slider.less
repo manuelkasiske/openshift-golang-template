@@ -1,0 +1,127 @@
+@import "moodIcon";
+
+.slider {
+  position: relative;
+  height: 30px;
+  background: #EEE;
+
+  &--moods {
+
+    &.highest:after {
+        transform: scale(2) translateX(10px);
+    }
+
+    &.lowest:before {
+      transform: scale(2) translateX(-10px);
+    }
+
+    &:before {
+      transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      content: "";
+      position: absolute;
+      left: -20px;
+      bottom: -6px;
+      z-index: 10;
+      box-shadow: 1px 1px 2px #000;
+      border-radius: 20px;
+      .moodIcon();
+      .moodIcon--veryUnhappy()
+    }
+
+    &:after{
+      transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      content: "";
+      position: absolute;
+      right: -20px;
+      bottom: -6px;
+      box-shadow: -1px 1px 2px #000;
+      border-radius: 20px;
+      .moodIcon();
+      .moodIcon--veryHappy()
+    }
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+1,bf0000+9,bfb200+26,bfbfbf+47,00bfbf+76,00bf00+100 */
+    background: #000000; /* Old browsers */
+    background: -moz-linear-gradient(left,  #000000 1%, #bf0000 9%, #bfb200 26%, #bfbfbf 47%, #00bfbf 76%, #00bf00 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  #000000 1%,#bf0000 9%,#bfb200 26%,#bfbfbf 47%,#00bfbf 76%,#00bf00 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  #000000 1%,#bf0000 9%,#bfb200 26%,#bfbfbf 47%,#00bfbf 76%,#00bf00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00bf00',GradientType=1 ); /* IE6-9 */
+
+    border-radius: 15px;
+    box-shadow: 2px 2px 6px #000 inset;
+    margin-bottom: 1em;
+  }
+
+  &__handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+
+
+    width: 30px;
+    height: 30px;
+
+    &--red {
+      background: #CC0000;
+      color: #FFF;
+      font-size: 14px;
+      line-height: 30px;
+      text-align: center;
+      border-radius: 15px;
+      border: 1px solid #333;
+    }
+
+    &--grip {
+      @grip: repeating-linear-gradient(90deg, #888, #888 1px, #aaa 1px, #aaa 2px, transparent 2px, transparent 4px);
+      @silver: linear-gradient(to bottom, #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%);
+      @topShadow: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 100%);
+
+      background-image: @grip, @grip, @silver;
+      background-position: 25% 50%, 75% 50%, 0 0;
+      background-size: 10px 20px, 10px 20px, 100% 100%;
+      background-repeat: no-repeat;
+      box-shadow: 0 2px 2px #333;
+      width: 60px;
+      height: 40px;
+      border-radius: 20px;
+      border: 1px solid #888;
+      top: -5px;
+    }
+
+    &--glossy {
+      width: 50px;
+      border-radius: 15px;
+      border: 1px solid #333;
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f8f9+0,e5ebee+50,d7dee3+51,f5f7f9+100;White+Gloss */
+      background: #f6f8f9; /* Old browsers */
+      background: -moz-radial-gradient(center, ellipse cover,  #f6f8f9 0%, #e5ebee 50%, #d7dee3 51%, #f5f7f9 100%); /* FF3.6-15 */
+      background: -webkit-radial-gradient(center, ellipse cover,  #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* Chrome10-25,Safari5.1-6 */
+      background: radial-gradient(ellipse at center,  #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#f5f7f9',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    }
+
+    &:hover {
+      .slider__moodIndicator {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__moodIndicator {
+    opacity: 0;
+    color: #333;
+    position: relative;
+    bottom: 25px;
+    text-align: center;
+    width: 320px;
+    left: -130px;
+    border-radius: 1em;
+    background-color: rgba(0,0,0,.25);
+    transition: all 1s ease;
+  }
+
+  &--disabled {
+    background: #898989;
+  }
+}

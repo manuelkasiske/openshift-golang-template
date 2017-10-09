@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hard Mood - Administration</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="google-signin-client_id" content="10256926422-quhsgmmfd1knnr2t90ckq1tt11qkpiff.apps.googleusercontent.com">
+    <link rel="icon" href="/static/images/favicon.png?v=2" size="16x16" type="image/png">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries-->
+    <!-- [if lt IE 9]-->
+    <script type="text/javascript" src="http://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script type="text/javascript" src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!-- [endif]-->
+  </head>
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">HardMood</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Admin<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/admin/subscribers">Benutzerverwaltung</a></li>
+                    <li><a href="/evaluation">Auswertung</a></li>
+                  </ul>
+                </li>
+                <li><a style="display:none;" href="/login" onclick="signIn();">Login</a></li>
+                <li><a href="#" onclick="signOut();">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="panel">
+          <div class="panel-body">
+            <div class="moodForm col-md-10 col-md-offset-1">
+              <div class="page-header">
+                <h1>How do you feel today?</h1>
+              </div>
+              <div class="moodForm__wrapper text-center">
+                <form method="POST" data-bind="attr: {action: moodUrl()}">
+                  <div class="row">
+                    <div data-bind="slider: mood(), attr: {class: moodClass()}" data-snap="false" class="slider slider--moods">
+                      <div class="slider__handle slider__handle--grip">
+                        <div data-bind="text:moodLabel()" class="slider__moodIndicator"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row text-center">
+                    <button type="submit" data-bind="click: doPost" class="btn btn-primary">
+                      submit
+                      
+                    </button>
+                  </div>
+                </form>
+                <!--
+                .row
+                    button.btn.btn--mood(type="submit", name="mood", value="2.0", data-bind="click: doPost")
+                        span.moodIcon.moodIcon--veryHappy
+                        span.btn__label.
+                            very happy
+                .row
+                    button.btn.btn--mood(type="submit", name="mood", value="1.0", data-bind="click: doPost")
+                        span.moodIcon.moodIcon--happy
+                        span.btn__label.
+                            happy
+                .row
+                    button.btn.btn--mood(type="submit", name="mood", value="0.0", data-bind="click: doPost")
+                        span.moodIcon.moodIcon--neutral
+                        span.btn__label.
+                            neutral
+                .row
+                    button.btn.btn--mood(type="submit", name="mood", value="-1.0", data-bind="click: doPost")
+                        span.moodIcon.moodIcon--unhappy
+                        span.btn__label.
+                            unhappy
+                .row
+                    button.btn.btn--mood(type="submit", name="mood", value="-2.0", data-bind="click: doPost")
+                        span.moodIcon.moodIcon--veryUnhappy
+                        span.btn__label.
+                            very unhappy
+                
+                -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="alertBox" style="display: none" tabindex="-1" role="dialog" aria-labelledby="modalLabel" class="modal fade bs-example-modal-sm">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">x</span></button>
+            <h2 id="modalLabel" data-bind="text: errorTitle" class="modal-title"></h2>
+          </div>
+          <div class="modal-body">
+            <div data-bind="text: errorMessage" class="errorMessage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <p class="navbar-text navbar-right">&copy; 2016 HardMood Inc.</p>
+        </div>
+      </nav>
+    </footer>
+    <script src="/static/js/form.bundle.js"></script>
+  </body>
+</html>

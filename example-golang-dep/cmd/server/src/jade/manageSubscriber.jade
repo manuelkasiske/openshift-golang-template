@@ -1,0 +1,51 @@
+extends /layout/default
+
+block navigation
+    +navigationBar({
+
+    })
+
+block content
+    .container.user(style="margin-bottom: 50px")
+        .row
+            .page-header
+                h2 Benutzerverwaltung - Team "WUB"
+
+            .alert.alert-success(style="display: none", role="alert", data-bind="visible: shouldShowMessage")
+                strong.
+                    Erfolgreich gespeichert
+                | Die E-Mail Adresse wurde zur Mailingliste hinzugefügt.
+
+            .alert.alert-danger(style="display: none", role="alert", data-bind="visible: shouldShowErrorMessage")
+                strong.
+                    Ohne Erfolg!
+                | Die E-Mail Adresse konnte nicht gespeichert werden.
+
+            .well
+                p.
+                    Füge neue Benutzer zum hinzu. Alle hinzugefügten Nutzer werden täglich per E-Mail zur Abstimmung aufgefordert. Die Abstimmung erfolgt freiwillig und anonym.
+        .row
+            table.table
+                thead
+                    tr
+                        th.
+                            E-Mail Adresse
+                        th
+                tbody(data-bind="foreach: emails, visible: emails().length > 0")
+                    tr
+                        td(data-bind="text: email")
+                        td
+                            button(type="button", class="btn btn-danger", data-bind="click: $parent.remove")
+                                span.glyphicon.glyphicon-trash
+        .row
+            form(action="/json/subscribers", method="post")
+                label(for="email").
+                    E-Mail:
+                input#email(name="email", type="text", value="", data-bind="value: newEmailText")
+                input#team(name="team", type="hidden", value="1", data-bind="value: team")
+                button.btn.btn-primary(data-bind="click: save")
+                    span.glyphicon.glyphicon-ok
+
+
+block bottomScripts
+    script(src="/static/js/subscribers.bundle.js")

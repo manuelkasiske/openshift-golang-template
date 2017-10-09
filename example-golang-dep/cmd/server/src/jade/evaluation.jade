@@ -1,0 +1,47 @@
+extends /layout/default
+
+block navigation
+    +navigationBar({
+
+    })
+
+block content
+    .container.user(style="margin-bottom: 50px")
+        .row
+            .page-header
+                h2 Auswertung
+            .well
+                p Die Auswertung der aktuellen Bewertungen.
+        .row
+            .panel.panel-default
+                label
+                    input(id='extended' type='checkbox', name='limit', value='', data-bind="checked: extendedData, click: getData")
+                    |  Show Last 60 Days
+                .panel-body#moodChartWrapper()
+                    canvas(id="moodChart")
+        .row
+            .panel.panel-default
+                .panel-body#pieChartWrapper()
+                    canvas#pieChart()
+        .row
+            .table-responsive
+                table.table.table-striped.table-bordered
+                    thead
+                        tr
+                            th Datum
+                            th.danger very unhappy
+                            th.warning unhappy
+                            th neutral
+                            th.info happy
+                            th.success very happy
+                    tbody(data-bind="foreach: moods, visible: moods().length > 0")
+                        tr
+                            td(data-bind="text: date")
+                            td(data-bind="text: veryUnhappy")
+                            td(data-bind="text: unhappy")
+                            td(data-bind="text: neutral")
+                            td(data-bind="text: happy")
+                            td(data-bind="text: veryHappy")
+
+block bottomScripts
+    script(src="/static/js/evaluation.bundle.js")
