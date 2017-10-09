@@ -279,8 +279,8 @@ func getDbAddr() string {
 func getDbUser() string {
 	user := "postgres"
 
-	if os.Getenv("OPENSHIFT_POSTGRESQL_DB_USERNAME") != "" {
-		user = os.Getenv("OPENSHIFT_POSTGRESQL_DB_USERNAME")
+	if os.Getenv("POSTGRESQL_USER") != "" {
+		user = os.Getenv("POSTGRESQL_USER")
 	}
 
 	return user
