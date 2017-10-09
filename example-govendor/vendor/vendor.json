@@ -11,5 +11,5 @@
 			"versionExact": "v2.1.0"
 		}
 	],
-	"rootPath": "github.com/amsokol/openshift-golang-template/example-govendor"
+	"rootPath": "github.com/manuelkasiske/openshift-golang-template/example-govendor"
 }

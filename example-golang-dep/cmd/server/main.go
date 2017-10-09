@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/amsokol/openshift-golang-template/example-golang-dep/pkg/cmd/cli"
-	"github.com/amsokol/openshift-golang-template/example-golang-dep/pkg/cmd/server"
+	"github.com/manuelkasiske/openshift-golang-template/example-golang-dep/pkg/cmd/cli"
+	"github.com/manuelkasiske/openshift-golang-template/example-golang-dep/pkg/cmd/server"
 )
 
 func main() {

@@ -2,11 +2,11 @@
 
 It supports:
 
-- Golang [dep manager](https://github.com/golang/dep) (dep is a prototype dependency management tool) - [/example-golang-dep](https://github.com/amsokol/openshift-golang-template/tree/master/example-golang-dep)
-- [glide](https://github.com/Masterminds/glide) manager - [/example-glide](https://github.com/amsokol/openshift-golang-template/tree/master/example-glide)
-- [godep](https://github.com/tools/godep) manager - [/example-godep](https://github.com/amsokol/openshift-golang-template/tree/master/example-godep)
-- [govendor](https://github.com/kardianos/govendor) manager - [/example-govendor](https://github.com/amsokol/openshift-golang-template/tree/master/example-govendor)
-- Traditional `go get` - [/example](https://github.com/amsokol/openshift-golang-template/tree/master/example)
+- Golang [dep manager](https://github.com/golang/dep) (dep is a prototype dependency management tool) - [/example-golang-dep](https://github.com/manuelkasiske/openshift-golang-template/tree/master/example-golang-dep)
+- [glide](https://github.com/Masterminds/glide) manager - [/example-glide](https://github.com/manuelkasiske/openshift-golang-template/tree/master/example-glide)
+- [godep](https://github.com/tools/godep) manager - [/example-godep](https://github.com/manuelkasiske/openshift-golang-template/tree/master/example-godep)
+- [govendor](https://github.com/kardianos/govendor) manager - [/example-govendor](https://github.com/manuelkasiske/openshift-golang-template/tree/master/example-govendor)
+- Traditional `go get` - [/example](https://github.com/manuelkasiske/openshift-golang-template/tree/master/example)
 
 ## Sample data to try golang template
 
@@ -14,7 +14,7 @@ It supports:
 |--------------------------------------|----------------------------------------------------------|
 | Go                                   | Go v1.9                                                  |
 | OpenShift                            | OpenShift Origin v1.5                                    |
-| Git repository                       | https://github.com/amsokol/openshift-golang-template.git |
+| Git repository                       | https://github.com/manuelkasiske/openshift-golang-template.git |
 | Context directory                    | /example-golang-dep                                      |
 | Folder with main.go to build and run | /example-golang-dep/cmd/server                           |
 
@@ -54,14 +54,14 @@ It supports:
 
 9. Set `Name` to `golang1`
 
-10. Set `Git Repository URL` to `https://github.com/amsokol/openshift-golang-template.git` or click `Try It`
+10. Set `Git Repository URL` to `https://github.com/manuelkasiske/openshift-golang-template.git` or click `Try It`
 
 11. Click `advanced options` to add additional configuration parameters
 
 12. Set `Context Dir` to `/example-golang-dep` (sample project with [dep manager](https://github.com/golang/dep) support)
 
 13. Add the following environment variables to `Build Configuration` section:
-- GOPROJECT_ROOT=github.com/amsokol/openshift-golang-template/example-golang-dep
+- GOPROJECT_ROOT=github.com/manuelkasiske/openshift-golang-template/example-golang-dep
 - GOPROJECT_CMD=cmd/server
 
 ```bash
@@ -69,8 +69,8 @@ GOPROJECT_ROOT tells builder the root package of go project
 GOPROJECT_CMD tells builder the where "main()" function of "main" package to build and run is located (relative to GOPROJECT_ROOT).
 Note: ignore GOPROJECT_CMD if "main()" function of "main" package is located in GOPROJECT_ROOT folder.
 
-In example above "main()" function of "main" package is located in `github.com/amsokol/openshift-golang-template/example-golang-dep/cmd/server`.
-GOPROJECT_ROOT is set to `github.com/amsokol/openshift-golang-template/example-golang-dep`.
+In example above "main()" function of "main" package is located in `github.com/manuelkasiske/openshift-golang-template/example-golang-dep/cmd/server`.
+GOPROJECT_ROOT is set to `github.com/manuelkasiske/openshift-golang-template/example-golang-dep`.
 So GOPROJECT_CMD is set to `cmd/server`
 ```
 
@@ -151,7 +151,7 @@ GOPROJECT_CMD_CONFIG=-u "domain\username:passwd" smb://config.server.com/messagi
 ## Helper #1 - you can try golang template using S2I:
 
 ```bash
-s2i build https://github.com/amsokol/openshift-golang-template.git amsokol/golang-openshift:1.9.0-1 golang1 -e GOPROJECT_ROOT=github.com/amsokol/openshift-golang-template/example-golang-dep -e GOPROJECT_CMD=cmd/server --context-dir /example-golang-dep
+s2i build https://github.com/manuelkasiske/openshift-golang-template.git manuelkasiske/golang-openshift:1.9.0-1 golang1 -e GOPROJECT_ROOT=github.com/manuelkasiske/openshift-golang-template/example-golang-dep -e GOPROJECT_CMD=cmd/server --context-dir /example-golang-dep
 ```
 
 ## Helper #2 - how to export/edit template from OpenShift

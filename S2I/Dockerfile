@@ -1,8 +1,8 @@
-# amsokol/golang-openshift:1.9.0
+# manuelkasiske/golang-openshift:1.9.0
 FROM openshift/base-centos7
 
 # Maintainer name in the image metadata
-MAINTAINER Alexander Sokolovsky <amsokol@gmail.com>
+MAINTAINER Manuel Kasiske <manuel.kasiske@gmx.de>
 
 # Builder environment variable to inform users about application you provide them
 ENV GOLANG_OPENSHIFT_BUILDER_VERSION 1.0

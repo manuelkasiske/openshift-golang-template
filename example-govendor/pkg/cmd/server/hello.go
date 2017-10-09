@@ -3,7 +3,7 @@ package server
 import (
 	"net/http"
 
-	"github.com/amsokol/openshift-golang-template/example-govendor/pkg/fake"
+	"github.com/manuelkasiske/openshift-golang-template/example-govendor/pkg/fake"
 )
 
 // hello provides HTTP endpoint for "Hello" method

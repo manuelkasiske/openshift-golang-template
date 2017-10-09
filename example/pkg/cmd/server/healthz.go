@@ -3,7 +3,7 @@ package server
 import (
 	"net/http"
 
-	"github.com/amsokol/openshift-golang-template/example/pkg/fake"
+	"github.com/manuelkasiske/openshift-golang-template/example/pkg/fake"
 )
 
 // live provides HTTP endpoint for application liveness probe
