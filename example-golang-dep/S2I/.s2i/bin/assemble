@@ -1,0 +1,108 @@
+#!/bin/bash -e
+#
+# S2I assemble script for the 'amsokol/golang-openshift:1.9.x-x' image.
+# The 'assemble' script builds your application source so that it is ready to run.
+#
+# For more information refer to the documentation:
+#	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+if [[ "$1" == "-h" ]]; then
+	# If the 'test1' assemble script is executed with '-h' flag,
+	# print the usage.
+	exec /usr/libexec/s2i/usage
+fi
+
+# Restore artifacts from the previous build (if they exist).
+#
+if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+  echo "---> Restoring build artifacts..."
+  mv /tmp/artifacts/. ./
+fi
+
+echo "---> Сlarify the root package for go application"
+if [[ -n "${GOPROJECT_ROOT/[ ]*\n/}" ]]
+then
+	echo "Root package is set to \"$GOPROJECT_ROOT\""
+    ROOT_PACKAGE=$GOPROJECT_ROOT
+else
+	ROOT_PACKAGE=$(echo "$SOURCE_REPOSITORY" | sed -re "s/(https:\/\/|git@)([^?]+)\.git/\2/g" | sed -re "s/:/\//g")
+	if [[ -n "${SOURCE_CONTEXT_DIR/[ ]*\n/}" ]]
+	then
+		ROOT_PACKAGE="$ROOT_PACKAGE/$SOURCE_CONTEXT_DIR"
+		echo "SOURCE_CONTEXT_DIR is \"$SOURCE_CONTEXT_DIR\", so root package is \"$ROOT_PACKAGE\""
+	else
+		echo "SOURCE_CONTEXT_DIR is empty, so root package is \"$ROOT_PACKAGE\""
+	fi
+fi
+
+SOURCE_CODE="$GOPATH/src/$ROOT_PACKAGE"
+echo "---> Installing application source in folder \"$SOURCE_CODE\""
+mkdir -p $SOURCE_CODE
+cd $SOURCE_CODE
+if test -d /tmp/src
+then
+	cp -Rf /tmp/src/. ./
+else
+	# for backwards compatibility
+	cp -Rf /tmp/s2i*/upload/src/. ./
+fi
+
+mkdir -p $GOPATH/bin
+
+if [ -f "./Gopkg.toml" ]
+then
+	echo "---> Using golang dep manager (dep is a prototype dependency management tool)"
+	echo "---> Downloading golang dep manager from github.com/golang/dep ..."
+	go get -u github.com/golang/dep/cmd/dep
+	echo "---> Downloading dependencies (running 'dep ensure') ..."
+	dep ensure
+elif [ -f "./Godeps/Godeps.json" ]
+then
+	echo "---> Using godep manager"
+	echo "---> Downloading godep manager from github.com/tools/godep ..."
+	go get -u github.com/tools/godep
+	echo "---> Downloading dependencies (running 'godep restore') ..."
+	godep restore
+elif [ -f "./glide.yaml" ]
+then
+	echo "---> Using glide manager"
+	echo "---> Downloading glide manager from github.com/Masterminds/glide ..."
+	go get -u github.com/Masterminds/glide
+	echo "---> Downloading dependencies (running 'glide install') ..."
+	glide install
+elif [ -f "./vendor/vendor.json" ]
+then
+	echo "---> Using govendor manager"
+	echo "---> Downloading govendor manager from github.com/kardianos/govendor ..."
+	go get -u github.com/kardianos/govendor
+	echo "---> Downloading dependencies (running 'govendor sync') ..."
+	govendor sync
+else
+	echo "---> Do not use dependency manager - run 'go get'"
+	echo "---> Downloading dependencies..."
+	go get -v ./...
+fi
+
+echo "---> Building application from source"
+cd ./$GOPROJECT_CMD
+go build -o $GOPATH/bin/goapplication2run $GO_BUILD_ARGS
+
+echo "---> Copy static source files to bin directory"
+cp -R $GOPATH/src/$GOPROJECT_ROOT/$GOPROJECT_CMD/public $GOPATH/bin/public
+cp -R $GOPATH/src/$GOPROJECT_ROOT/$GOPROJECT_CMD/static $GOPATH/bin/static
+cp -R $GOPATH/src/$GOPROJECT_ROOT/$GOPROJECT_CMD/dist $GOPATH/bin/dist
+
+echo "---> Deploy configuration files (if existed)"
+cd $GOPATH/bin
+while read GOPROJECT_CMD_CONFIG
+do
+	if [[ $GOPROJECT_CMD_CONFIG =~ .+:// ]]
+	then
+		echo "---> Downloading \"$GOPROJECT_CMD_CONFIG\" to \"$GOPATH/bin/\""
+		curl -O $GOPROJECT_CMD_CONFIG
+	else
+		echo "---> Coping \"$SOURCE_CODE/$GOPROJECT_CMD_CONFIG\" to \"$GOPATH/bin/\""
+		cp -f $SOURCE_CODE/$GOPROJECT_CMD_CONFIG ./
+	fi
+done < <((env | grep '^GOPROJECT_CMD_CONFIG[0-9]*=') | sed  's/^.*=\(.*\)$/\1/')

@@ -84,4 +84,4 @@ spec:
       sampleRepo: https://github.com/manuelkasiske/openshift-golang-template.git
     from:
       kind: DockerImage
-      name: docker.io/amsokol/golang-openshift:1.9.0-1
+      name: docker.io/mk7831/golang-openshift:1.9.0-1

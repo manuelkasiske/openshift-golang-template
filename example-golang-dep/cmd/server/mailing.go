@@ -67,7 +67,7 @@ func getHtmlText(key string) string {
 	return `<html>
 	<body>
 	<h1>Select your mood</h1>
-	<a href="https://` + AppDns + `/moods/` + key + `">Take me to the mood selection!</a>
+	<a href="http://` + AppDns + `/moods/` + key + `">Take me to the mood selection!</a>
 	</body>
 	</html>`
 }
