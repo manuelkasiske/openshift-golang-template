@@ -28,8 +28,8 @@
               <ul class="nav navbar-nav">
                 <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Admin<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="/admin/subscribers">Benutzerverwaltung</a></li>
-                    <li><a href="/evaluation">Auswertung</a></li>
+                    <li><a href="/admin/subscribers">User Administration</a></li>
+                    <li><a href="/evaluation">Evaluation</a></li>
                   </ul>
                 </li>
                 <li><a style="display:none;" href="/login" onclick="signIn();">Login</a></li>
@@ -43,19 +43,20 @@
     <div style="margin-bottom: 50px" class="container user">
       <div class="row">
         <div class="page-header">
-          <h2>Benutzerverwaltung - Team "WUB"</h2>
+          <h2>User Administration - Team "WUB"</h2>
         </div>
-        <div style="display: none" role="alert" data-bind="visible: shouldShowMessage" class="alert alert-success"><strong>Erfolgreich gespeichert</strong>Die E-Mail Adresse wurde zur Mailingliste hinzugefügt.</div>
-        <div style="display: none" role="alert" data-bind="visible: shouldShowErrorMessage" class="alert alert-danger"><strong>Ohne Erfolg!</strong>Die E-Mail Adresse konnte nicht gespeichert werden.</div>
+        <div><a href="/admin/csv/1/365">Download Evaluation as CSV</a></div>
+        <div style="display: none" role="alert" data-bind="visible: shouldShowMessage" class="alert alert-success"><strong>Saved successfully</strong>The e-mail address has been added to the mailing list.</div>
+        <div style="display: none" role="alert" data-bind="visible: shouldShowErrorMessage" class="alert alert-danger"><strong>Without success!</strong>The e-mail address could not be saved.</div>
         <div class="well">
-          <p>Füge neue Benutzer zum hinzu. Alle hinzugefügten Nutzer werden täglich per E-Mail zur Abstimmung aufgefordert. Die Abstimmung erfolgt freiwillig und anonym.</p>
+          <p>Add new users. All added users are prompted to vote every day by e-mail. The vote is voluntary and anonymous.</p>
         </div>
       </div>
       <div class="row">
         <table class="table">
           <thead>
             <tr>
-              <th>E-Mail Adresse</th>
+              <th>e-mail address</th>
               <th></th>
             </tr>
           </thead>
@@ -81,7 +82,7 @@
     <footer>
       <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
-          <p class="navbar-text navbar-right">&copy; 2016 HardMood Inc.</p>
+          <p class="navbar-text navbar-right">&copy; 2017 HardMood Inc.</p>
         </div>
       </nav>
     </footer>

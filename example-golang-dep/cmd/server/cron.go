@@ -6,6 +6,6 @@ import (
 
 func createCronJob(command func()) {
 	scheduler := cron.New()
-	scheduler.AddFunc("0 00 08 ? * MON-FRI", command)
+	scheduler.AddFunc("0 00 12 ? * MON-FRI", command)
 	scheduler.Start()
 }

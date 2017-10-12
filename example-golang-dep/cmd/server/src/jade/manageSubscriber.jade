@@ -9,27 +9,28 @@ block content
     .container.user(style="margin-bottom: 50px")
         .row
             .page-header
-                h2 Benutzerverwaltung - Team "WUB"
-
+                h2 User Administration - Team "WUB"
+            div
+                a(href='/admin/csv/1/365') Download Evaluation as CSV
             .alert.alert-success(style="display: none", role="alert", data-bind="visible: shouldShowMessage")
                 strong.
-                    Erfolgreich gespeichert
-                | Die E-Mail Adresse wurde zur Mailingliste hinzugefügt.
+                    Saved successfully
+                | The e-mail address has been added to the mailing list.
 
             .alert.alert-danger(style="display: none", role="alert", data-bind="visible: shouldShowErrorMessage")
                 strong.
-                    Ohne Erfolg!
-                | Die E-Mail Adresse konnte nicht gespeichert werden.
+                    Without success!
+                | The e-mail address could not be saved.
 
             .well
                 p.
-                    Füge neue Benutzer zum hinzu. Alle hinzugefügten Nutzer werden täglich per E-Mail zur Abstimmung aufgefordert. Die Abstimmung erfolgt freiwillig und anonym.
+                    Add new users. All added users are prompted to vote every day by e-mail. The vote is voluntary and anonymous.
         .row
             table.table
                 thead
                     tr
                         th.
-                            E-Mail Adresse
+                            e-mail address
                         th
                 tbody(data-bind="foreach: emails, visible: emails().length > 0")
                     tr

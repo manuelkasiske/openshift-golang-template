@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"encoding/csv"
 )
 
 type (
@@ -22,24 +23,24 @@ type (
 	}
 
 	Subscription struct {
-		Email string `json:"email"`
+		Email  string `json:"email"`
 		TeamId int64 `json:"teamId"`
 	}
 
 	UserCreation struct {
-		Email string `json:"email"`
+		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 
 	Login struct {
-		Email string `json:"email"`
+		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 
 	TeamCreation struct {
-		Name string  `json:"name"`
+		Name      string  `json:"name"`
 		EmailCron string `json:"emailCron"`
-		UserId int64 `json:"userId"`
+		UserId    int64 `json:"userId"`
 	}
 
 	JsonResponse struct {
@@ -57,7 +58,13 @@ type (
 	}
 
 	Authentication struct {
-		Token  string  `json:"token"`
+		Token string  `json:"token"`
+	}
+
+	Writer struct {
+		Comma   rune // Field delimiter (set to ',' by NewWriter)
+		UseCRLF bool // True to use \r\n as the line terminator
+			     // contains filtered or unexported fields
 	}
 )
 
@@ -118,6 +125,7 @@ func initServer() (server *echo.Echo) {
 
 	group := server.Group("/admin", middleware.BasicAuth(isAdmin))
 	group.Get("/subscribers", getAdminSubscriber)
+	group.Get("/csv/:id/:limit", getCsv)
 
 	server.GET("/json/subscribers", getSubscribers)
 	server.DELETE("/json/subscribers/:id", deleteSubscribersByUuid)
@@ -185,7 +193,7 @@ func getDailyMoods(context echo.Context) error {
 }
 
 func reverse(moods []DailyMoods) []DailyMoods {
-	for i, j := 0, len(moods)-1; i < j; i, j = i+1, j-1 {
+	for i, j := 0, len(moods) - 1; i < j; i, j = i + 1, j - 1 {
 		moods[i], moods[j] = moods[j], moods[i]
 	}
 	return moods
@@ -206,7 +214,7 @@ func postDailyMoods(context echo.Context) error {
 				return context.JSON(http.StatusCreated, JsonResponse{http.StatusCreated, "Thank you!"})
 			}
 		} else {
-			return echo.NewHTTPError(http.StatusNotFound, "Did you vote already? Mood with key '"+key+"' not found!")
+			return echo.NewHTTPError(http.StatusNotFound, "Did you vote already? Mood with key '" + key + "' not found!")
 		}
 	}
 }
@@ -309,4 +317,39 @@ func postTeam(context echo.Context) error {
 	} else {
 		return echo.NewHTTPError(http.StatusBadRequest, "Name field, email cron field or user id field was empty!")
 	}
+}
+
+func getCsv(context echo.Context) error {
+
+	context.Response().Header().Set(echo.HeaderContentType, "text/csv")
+	context.Response().Header().Set(echo.HeaderContentDisposition, "attachment;filename=result.csv")
+	context.Response().WriteHeader(http.StatusOK)
+
+	teamId := context.Param("id")
+	limit, _ := strconv.Atoi(context.Param("limit"))
+	dailyMoods, _ := getAllDailyMoods(teamId, limit)
+
+
+	dailyMoods = reverse(dailyMoods)
+
+	w := csv.NewWriter(context.Response().Writer())
+
+	for _, dailyMood := range dailyMoods {
+		var record []string
+		record = append(record, dailyMood.Date.Format("2006-01-02"))
+		for _, mood := range dailyMood.Moods {
+			record = append(record, strconv.FormatFloat(mood, 'g', -1, 64))
+		}
+		if err := w.Write(record); err != nil {
+			log.Fatalln("error writing record to csv:", err)
+		}
+	}
+
+	w.Flush()
+
+	if err := w.Error(); err != nil {
+		log.Fatal(err)
+	}
+
+	return context.NoContent(200)
 }
